@@ -2,9 +2,11 @@ extends layout
 
 block content
   h1 Кошельки
-  each wallet in walletsList
-    h2= wallet
-
+  each wallet, index in walletsList
+    if wallet !== ''
+      div(class='wallet')
+        h2= wallet
+        button(onclick='remove(' + index + ')') Удалить
   h1#error
   
   form(id="mainForm", method="post")

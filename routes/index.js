@@ -32,19 +32,11 @@ web3.eth
 /* GET home page. */
 router.get("/", async (req, res, next) => {
   const accounts = await web3.eth.getAccounts()
-  console.log(accounts)
 
   const walletsList = await deployedContract.methods.getWallets().call()
-  console.log(walletsList)
-  console.log(web3.utils.toAscii(walletsList[0]))
-  // const votes = await Promise.all(listOfCandidates.map(async name => await deployedContract.methods.totalVotesFor(web3.utils.asciiToHex(name)).call()));
-  // const votesCount = listOfCandidates.reduce((obj, name, i) => {
-  //   obj[name] = votes[i];
-  //   return obj;
-  // }, {});
   res.render("index", {
     title: "Express",
-    walletsList: walletsList.map(web3.utils.toAscii),
+    walletsList: walletsList.map(web3.utils.toUtf8).filter((e) => !!e),
     addresses: accounts,
   })
 })
@@ -66,13 +58,12 @@ router.delete("/:index", async (req, res, next) => {
   const {
     params: { index },
   } = req
+  const accounts = await web3.eth.getAccounts()
 
   try {
-    const response = await deployedContract.methods
-      .removeWallet(web3.utils.asciiToHex(index))
-      .send({
-        from: req.body.address,
-      })
+    const response = await deployedContract.methods.removeWallet(index).send({
+      from: accounts[1],
+    })
     res.send(response)
   } catch (err) {
     next(err)

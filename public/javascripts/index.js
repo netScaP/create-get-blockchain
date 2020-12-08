@@ -22,3 +22,13 @@ function handleSubmit(event) {
 }
 const form = document.getElementById("mainForm")
 form.addEventListener("submit", handleSubmit)
+
+function remove(index) {
+  const errorEl = document.getElementById("error")
+  axios
+    .delete("/" + index)
+    .then(() => location.reload())
+    .catch((err) => {
+      errorEl.innerText = err.message
+    })
+}

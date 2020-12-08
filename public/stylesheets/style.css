@@ -15,6 +15,15 @@ h1 {
 h2 {
   text-align: center;
 }
+.wallet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wallet h2,
+.wallet button {
+  margin: 0;
+}
 
 table {
   text-align: left;
