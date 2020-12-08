@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Кошельки
+  each wallet in walletsList
+    h2= wallet
+
+  h1#error
+  
+  form(id="mainForm", method="post")
+    input(name='walletName', placeholder='Номер кошелька')
+
+    select(name="address")
+      option(value='null', selected="selected") Укажите привязанный адрес
+      each address in addresses
+        option(value=address)= address
+
+    button(type="submit") Send
